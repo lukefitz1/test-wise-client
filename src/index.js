@@ -1,17 +1,34 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import React from "react";
+import ReactDOM from "react-dom";
+import App from "./App";
+import { Auth0Provider } from "@auth0/auth0-react";
+import { Provider } from "react-redux";
+import { createStore, applyMiddleware } from "redux";
+import history from "./utils/history";
+import config from "./auth_config.json";
+import reducers from "./redux/reducers";
+import thunk from "redux-thunk";
+
+const onRedirectCallback = (appState) => {
+  history.push(
+    appState && appState.returnTo ? appState.returnTo : window.location.pathname
+  );
+};
+
+const store = createStore(reducers, applyMiddleware(thunk));
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
+  <Auth0Provider
+    domain={config.domain}
+    clientId={config.clientId}
+    audience={config.audience}
+    redirectUri={`${window.location.origin}/organization`}
+    onRedirectCallback={onRedirectCallback}
+    scope={config.scope}
+  >
+    <Provider store={store}>
+      <App />
+    </Provider>
+  </Auth0Provider>,
+  document.querySelector("#root")
 );
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();

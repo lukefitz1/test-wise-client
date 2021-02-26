@@ -1,0 +1,13 @@
+.header {
+  border: 1px solid red;
+  display: flex;
+  justify-content: space-between;
+}
+
+.logo {
+  height: 100px;
+}
+
+.user-display {
+  display: flex;
+}

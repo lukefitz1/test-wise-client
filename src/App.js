@@ -1,24 +1,42 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { Router, Route, Switch } from "react-router-dom";
+import { useAuth0 } from "@auth0/auth0-react";
+// import Login from "./components/Login";
+import Steps from "./components/Steps";
+import Scenarios from "./components/Scenarios";
+import Features from "./components/Features";
+import Projects from "./components/Projects";
+import Organization from "./components/Organization";
+// import Steps from "./views/Steps";
+import history from "./utils/history";
+import Loading from "./components/Loading";
+import Header from "./components/Header/Header";
+import Home from "./views/Home/Home";
+import "./App.css";
 
 function App() {
+  const { isLoading, error } = useAuth0();
+
+  if (error) {
+    return <div>Oops... {error.message}</div>;
+  }
+
+  if (isLoading) {
+    return <Loading />;
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router history={history}>
+      <Header />
+      <Switch>
+        <Route path="/" exact component={Home} />
+        <Route path="/scenarios" exact component={Scenarios} />
+        <Route path="/steps" exact component={Steps} />
+        <Route path="/features" exact component={Features} />
+        <Route path="/projects" exact component={Projects} />
+        <Route path="/organization" exact component={Organization} />
+      </Switch>
+    </Router>
   );
 }
 

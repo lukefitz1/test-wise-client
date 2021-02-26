@@ -1,0 +1,6 @@
+{
+  "domain": "test-wise.us.auth0.com",
+  "clientId": "bhHyAHpZ0xFXoMCl2aJvpBOYgoFvDbsl",
+  "audience": "https://test-wise-api.com",
+  "scope": "openid profile email"
+}
