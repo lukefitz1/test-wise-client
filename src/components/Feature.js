@@ -3,6 +3,7 @@ import { useAuth0, withAuthenticationRequired } from "@auth0/auth0-react";
 import TestWiseApi from "../api/testWise";
 import Loading from "../components/Loading";
 import CreateScenarioForm from "../components/CreateScenarioForm/CreateScenarioForm";
+import DynamicForm from "../components/DynamicForm";
 
 const Feature = (props) => {
   const { isLoading, getAccessTokenSilently } = useAuth0();
@@ -130,7 +131,7 @@ const Feature = (props) => {
 
   return (
     <div className="feature-data">
-      {/* <div>Feature ID: {feature.id}</div> */}
+      <div>Feature ID: {feature.id}</div>
       <button onClick={showNewScenarioForm}>Add Scenario</button>
       <CreateScenarioForm
         scenarioFormShown={scenarioFormShown}
@@ -143,6 +144,7 @@ const Feature = (props) => {
       />
       <div>Feature Description: {feature.description}</div>
       <div className="scenarios">{scenarios}</div>
+      <DynamicForm />
     </div>
   );
 };
